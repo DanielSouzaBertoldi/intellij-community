@@ -1,7 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("io.gitlab.arturbosch.detekt")
+    id("dev.detekt")
     id("org.jmailen.kotlinter")
     id("com.ncorti.ktfmt.gradle")
 }
@@ -15,7 +15,7 @@ detekt {
 dependencies {
     // Use the Jewel custom rules
     detektPlugins(project(":detekt-plugin"))
-    detektPlugins("io.nlopez.compose.rules:detekt:0.4.27")
+    detektPlugins("io.nlopez.compose.rules:detekt:0.5.8")
 }
 
 ktfmt {
