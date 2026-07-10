@@ -1,19 +1,31 @@
 package org.jetbrains.jewel.samples.standalone.viewmodel
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import org.jetbrains.jewel.foundation.JewelFlags
+import org.jetbrains.jewel.foundation.theme.JewelTheme
 import org.jetbrains.jewel.intui.standalone.styling.default
 import org.jetbrains.jewel.intui.standalone.styling.defaults
+import org.jetbrains.jewel.intui.standalone.theme.default
 import org.jetbrains.jewel.samples.showcase.ShowcaseIcons
 import org.jetbrains.jewel.samples.showcase.views.ComponentsView
 import org.jetbrains.jewel.samples.showcase.views.ComponentsViewModel
@@ -23,8 +35,11 @@ import org.jetbrains.jewel.samples.standalone.IntUiThemes
 import org.jetbrains.jewel.samples.standalone.view.MarkdownDemo
 import org.jetbrains.jewel.samples.standalone.view.WelcomeView
 import org.jetbrains.jewel.samples.standalone.viewmodel.MainViewModel.componentsViewModel
+import org.jetbrains.jewel.ui.component.DefaultButton
+import org.jetbrains.jewel.ui.component.Text
 import org.jetbrains.jewel.ui.component.styling.IconButtonMetrics
 import org.jetbrains.jewel.ui.component.styling.ScrollbarVisibility
+import org.jetbrains.jewel.ui.theme.defaultButtonStyle
 
 public object MainViewModel {
     public val componentsViewModel: ComponentsViewModel
@@ -43,7 +58,7 @@ public object MainViewModel {
         currentView = views.first { viewInfo: ViewInfo -> viewInfo.title == destination }
     }
 
-    public var theme: IntUiThemes by mutableStateOf(IntUiThemes.Light)
+    public var theme: IntUiThemes by mutableStateOf(IntUiThemes.Dark)
 
     public var swingCompat: Boolean by mutableStateOf(false)
 
@@ -62,7 +77,7 @@ public object MainViewModel {
     public var currentView: ViewInfo by mutableStateOf(views.first())
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationStyleApi::class)
 private val mainMenuItems =
     mutableStateListOf(
         ViewInfo(
@@ -94,5 +109,39 @@ private val mainMenuItems =
             keyboardShortcut =
                 KeyBinding(macOs = setOf("⌥", "M"), windows = setOf("Alt", "M"), linux = setOf("Alt", "M")),
             content = { MarkdownDemo() },
+        ),
+        ViewInfo(
+            title = "Styles API Test",
+            iconKey = ShowcaseIcons.jewelLogo,
+            keyboardShortcut =
+                KeyBinding(macOs = setOf("⌥", "T"), windows = setOf("Alt", "T"), linux = setOf("Alt", "T")),
+            content = {
+                Column(
+                    modifier =
+                        Modifier.background(JewelTheme.globalColors.panelBackground)
+                            .fillMaxSize()
+                            .padding(start = 24.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                ) {
+                    Column(modifier = Modifier.padding(top = 36.dp)) {
+                        Text("This is a text example using Styles API")
+                        Spacer(Modifier.size(10.dp))
+                        DefaultButton(onClick = { println("styles api button") }, style = Style) {
+                            Text("Styles API button")
+                        }
+                    }
+
+                    Column(modifier = Modifier.padding(top = 36.dp)) {
+                        Text("This is a text example in current IntUiTheme")
+                        Spacer(Modifier.size(10.dp))
+                        DefaultButton(
+                            onClick = { println("default theme button") },
+                            style = JewelTheme.defaultButtonStyle,
+                        ) {
+                            Text("Current Button")
+                        }
+                    }
+                }
+            },
         ),
     )

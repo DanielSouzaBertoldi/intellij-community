@@ -1,5 +1,6 @@
 package org.jetbrains.jewel.samples.standalone
 
+import androidx.compose.foundation.ComposeFoundationFlags
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.key.Key
@@ -34,6 +35,7 @@ import org.jetbrains.jewel.window.styling.TitleBarStyle
 
 @ExperimentalLayoutApi
 public fun main() {
+    ComposeFoundationFlags.isInheritedTextStyleEnabled = true
     JewelLogger.getInstance("StandaloneSample").info("Starting Jewel Standalone sample")
     val icon = svgResource("icons/jewel-logo.svg")
 
@@ -104,6 +106,11 @@ private fun processKeyShortcuts(keyEvent: KeyEvent, onNavigateTo: (String) -> Un
 
         Key.C -> {
             onNavigateTo("Components")
+            true
+        }
+
+        Key.T -> {
+            onNavigateTo("Styles API Test")
             true
         }
 

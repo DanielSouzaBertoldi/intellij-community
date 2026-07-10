@@ -1,6 +1,8 @@
 package org.jetbrains.jewel.ui
 
 import androidx.compose.foundation.LocalContextMenuRepresentation
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
 import androidx.compose.foundation.text.LocalTextContextMenu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidedValue
@@ -85,6 +87,8 @@ import org.jetbrains.jewel.ui.component.styling.fallbackOutlinedSlimButtonStyle
 import org.jetbrains.jewel.ui.component.styling.fallbackPopupAdStyle
 import org.jetbrains.jewel.ui.component.styling.fallbackSearchMatchStyle
 import org.jetbrains.jewel.ui.component.styling.fallbackSpeedSearchStyle
+import org.jetbrains.jewel.ui.theme.JewelStyles
+import org.jetbrains.jewel.ui.theme.LocalJewelStyles
 
 @Stable
 @GenerateDataFunctions
@@ -129,6 +133,7 @@ public class DefaultComponentStyling(
     public val defaultSlimButtonStyle: ButtonStyle,
     public val outlinedSlimButtonStyle: ButtonStyle,
     public val badgeStyle: BadgeStyles,
+    public val jewelStyles: JewelStyles,
 ) : ComponentStyling {
     @Deprecated("Use the variant with badgeStyle.", level = DeprecationLevel.HIDDEN)
     public constructor(
@@ -210,6 +215,7 @@ public class DefaultComponentStyling(
         defaultSlimButtonStyle,
         outlinedSlimButtonStyle,
         fallbackBadgeStyle(),
+        FallbackJewelStyles,
     )
 
     @Deprecated(
@@ -293,6 +299,7 @@ public class DefaultComponentStyling(
         fallbackDefaultSlimButtonStyle(defaultButtonStyle.colors),
         fallbackOutlinedSlimButtonStyle(outlinedButtonStyle.colors),
         fallbackBadgeStyle(),
+        FallbackJewelStyles,
     )
 
     @Deprecated("Use the variant with popupAdStyle.", level = DeprecationLevel.HIDDEN)
@@ -372,6 +379,7 @@ public class DefaultComponentStyling(
         fallbackDefaultSlimButtonStyle(defaultButtonStyle.colors),
         fallbackOutlinedSlimButtonStyle(outlinedButtonStyle.colors),
         fallbackBadgeStyle(),
+        FallbackJewelStyles,
     )
 
     @Deprecated("Use the variant with speedSearchStyle.", level = DeprecationLevel.HIDDEN)
@@ -449,6 +457,7 @@ public class DefaultComponentStyling(
         fallbackDefaultSlimButtonStyle(defaultButtonStyle.colors),
         fallbackOutlinedSlimButtonStyle(outlinedButtonStyle.colors),
         fallbackBadgeStyle(),
+        FallbackJewelStyles,
     )
 
     @Deprecated("Use the variant with transparentIconButtonStyle.", level = DeprecationLevel.HIDDEN)
@@ -525,6 +534,7 @@ public class DefaultComponentStyling(
         fallbackDefaultSlimButtonStyle(defaultButtonStyle.colors),
         fallbackOutlinedSlimButtonStyle(outlinedButtonStyle.colors),
         fallbackBadgeStyle(),
+        FallbackJewelStyles,
     )
 
     @Composable
@@ -571,6 +581,7 @@ public class DefaultComponentStyling(
             LocalDefaultSlimButtonStyle provides defaultSlimButtonStyle,
             LocalOutlinedSlimButtonStyle provides outlinedSlimButtonStyle,
             LocalBadgeStyle provides badgeStyle,
+            LocalJewelStyles provides jewelStyles,
         )
 
     override fun equals(other: Any?): Boolean {
@@ -707,4 +718,9 @@ public class DefaultComponentStyling(
             "outlinedSlimButtonStyle=$outlinedSlimButtonStyle, " +
             "badgeStyle=$badgeStyle" +
             ")"
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+private object FallbackJewelStyles : JewelStyles {
+    override val defaultButton: Style = Style
 }

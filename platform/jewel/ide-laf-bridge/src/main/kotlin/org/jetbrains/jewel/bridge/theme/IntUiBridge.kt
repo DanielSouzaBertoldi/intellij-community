@@ -1,6 +1,8 @@
 package org.jetbrains.jewel.bridge.theme
 
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import com.intellij.ide.ui.laf.darcula.DarculaUIUtil
@@ -21,6 +23,7 @@ import org.jetbrains.jewel.foundation.theme.ThemeIconData
 import org.jetbrains.jewel.foundation.util.JewelLogger
 import org.jetbrains.jewel.ui.ComponentStyling
 import org.jetbrains.jewel.ui.DefaultComponentStyling
+import org.jetbrains.jewel.ui.theme.JewelStyles
 
 private val logger = JewelLogger.getInstance("JewelIntUiBridge")
 
@@ -62,6 +65,7 @@ internal fun createBridgeThemeDefinition(
     )
 }
 
+@OptIn(ExperimentalFoundationStyleApi::class)
 internal fun createBridgeComponentStyling(theme: ThemeDefinition): ComponentStyling {
     logger.debug("Obtaining Int UI component styling from Swing...")
 
@@ -110,6 +114,10 @@ internal fun createBridgeComponentStyling(theme: ThemeDefinition): ComponentStyl
         defaultSlimButtonStyle = readDefaultSlimButtonStyle(defaultButtonStyle.colors),
         outlinedSlimButtonStyle = readOutlinedSlimButtonStyle(outlinedButtonStyle.colors),
         badgeStyle = readBadgeStyle(theme.isDark),
+        jewelStyles =
+            object : JewelStyles {
+                override val defaultButton: Style = Style
+            },
     )
 }
 

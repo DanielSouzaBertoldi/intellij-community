@@ -2,6 +2,8 @@ package org.jetbrains.jewel.ui.component.styling
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.ProvidableCompositionLocal
@@ -240,6 +242,11 @@ public class ButtonMetrics(
 
 public val LocalDefaultButtonStyle: ProvidableCompositionLocal<ButtonStyle> = staticCompositionLocalOf {
     error("No default ButtonStyle provided. Have you forgotten the theme?")
+}
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+public val LocalDefaultButtonStyleStyle: ProvidableCompositionLocal<Style> = staticCompositionLocalOf {
+    error("No default ButtonStyleStyle provided. Have you forgotten the theme?")
 }
 
 public val LocalOutlinedButtonStyle: ProvidableCompositionLocal<ButtonStyle> = staticCompositionLocalOf {

@@ -22,6 +22,11 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.onClick
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
+import androidx.compose.foundation.style.rememberUpdatedStyleState
+import androidx.compose.foundation.style.styleable
+import androidx.compose.foundation.style.then
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
@@ -49,6 +54,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.coerceAtLeast
+import androidx.compose.ui.unit.dp
 import org.jetbrains.jewel.foundation.Stroke
 import org.jetbrains.jewel.foundation.modifier.border
 import org.jetbrains.jewel.foundation.modifier.thenIf
@@ -69,6 +75,7 @@ import org.jetbrains.jewel.ui.disabledAppearance
 import org.jetbrains.jewel.ui.focusOutline
 import org.jetbrains.jewel.ui.icons.AllIconsKeys
 import org.jetbrains.jewel.ui.painter.hints.Stroke as PainterHintStroke
+import org.jetbrains.jewel.ui.theme.LocalJewelStyles
 import org.jetbrains.jewel.ui.theme.defaultButtonStyle
 import org.jetbrains.jewel.ui.theme.defaultSlimButtonStyle
 import org.jetbrains.jewel.ui.theme.defaultSplitButtonStyle
@@ -76,6 +83,41 @@ import org.jetbrains.jewel.ui.theme.menuStyle
 import org.jetbrains.jewel.ui.theme.outlinedButtonStyle
 import org.jetbrains.jewel.ui.theme.outlinedSlimButtonStyle
 import org.jetbrains.jewel.ui.theme.outlinedSplitButtonStyle
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+public fun DefaultButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    style: Style = Style,
+    focusOutlineExpand: Dp = 1.5.dp,
+    textStyle: Style = Style, // TODO: create TextStyle with Styles API
+    secondaryContent: (() -> Unit)? = null,
+    content: @Composable () -> Unit,
+) {
+    val styleState = rememberUpdatedStyleState(interactionSource) { it.isEnabled = enabled }
+
+    Box(
+        modifier =
+            modifier
+                .clickable(
+                    onClick = onClick,
+                    enabled = enabled,
+                    role = Role.Button,
+                    interactionSource = interactionSource,
+                    indication = null,
+                )
+                .styleable(styleState, LocalJewelStyles.current.defaultButton then style),
+        propagateMinConstraints = true,
+    ) {
+        Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
+            Box(Modifier.thenIf(secondaryContent != null) { weight(1f, fill = false) }) { content() }
+            secondaryContent?.invoke()
+        }
+    }
+}
 
 /**
  * A button that follows the default visual styling with customizable content and behavior.

@@ -1,5 +1,7 @@
 package org.jetbrains.jewel.ui
 
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.StyleState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -135,3 +137,22 @@ public fun Modifier.outline(
     alignment: Stroke.Alignment = Stroke.Alignment.Outside,
     outlineWidth: Dp = JewelTheme.globalMetrics.outlineWidth,
 ): Modifier = outline(outline, state.isFocused, outlineShape, alignment, outlineWidth)
+
+/**
+ * Adds a focus outline to a composable. The outline is only shown when the component is focused.
+ *
+ * @param state The [StyleState] to observe for focus changes.
+ * @param outlineShape The [Shape] to use for the outline.
+ * @param alignment The [Stroke.Alignment] to use for the outline.
+ * @param outlineWidth The width of the outline [Dp].
+ * @param expand The amount of space to expand the outline by.
+ */
+@OptIn(ExperimentalFoundationStyleApi::class)
+@Composable
+public fun Modifier.focusOutline(
+    state: StyleState,
+    outlineShape: Shape,
+    alignment: Stroke.Alignment = Stroke.Alignment.Outside,
+    outlineWidth: Dp = JewelTheme.globalMetrics.outlineWidth,
+    expand: Dp = Dp.Unspecified,
+): Modifier = focusOutline(state.isFocused, outlineShape, alignment, outlineWidth, expand)

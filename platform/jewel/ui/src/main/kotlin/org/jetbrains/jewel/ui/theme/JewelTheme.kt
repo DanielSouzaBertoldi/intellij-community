@@ -3,6 +3,8 @@ package org.jetbrains.jewel.ui.theme
 import androidx.compose.foundation.IndicationNodeFactory
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.style.ExperimentalFoundationStyleApi
+import androidx.compose.foundation.style.Style
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
@@ -38,6 +40,7 @@ import org.jetbrains.jewel.ui.component.styling.LocalChipStyle
 import org.jetbrains.jewel.ui.component.styling.LocalCircularProgressStyle
 import org.jetbrains.jewel.ui.component.styling.LocalDefaultBannerStyle
 import org.jetbrains.jewel.ui.component.styling.LocalDefaultButtonStyle
+import org.jetbrains.jewel.ui.component.styling.LocalDefaultButtonStyleStyle
 import org.jetbrains.jewel.ui.component.styling.LocalDefaultComboBoxStyle
 import org.jetbrains.jewel.ui.component.styling.LocalDefaultDropdownStyle
 import org.jetbrains.jewel.ui.component.styling.LocalDefaultSlimButtonStyle
@@ -103,6 +106,10 @@ public val JewelTheme.Companion.defaultBannerStyle: DefaultBannerStyles
 
 public val JewelTheme.Companion.defaultButtonStyle: ButtonStyle
     @Composable @ReadOnlyComposable get() = LocalDefaultButtonStyle.current
+
+@OptIn(ExperimentalFoundationStyleApi::class)
+public val JewelTheme.Companion.defaultButtonStyleStyle: Style
+    @Composable @ReadOnlyComposable get() = LocalDefaultButtonStyleStyle.current
 
 public val JewelTheme.Companion.outlinedButtonStyle: ButtonStyle
     @Composable @ReadOnlyComposable get() = LocalOutlinedButtonStyle.current

@@ -82,6 +82,7 @@ import org.jetbrains.jewel.ui.icon.LocalNewUiChecker
 import org.jetbrains.jewel.ui.painter.LocalPainterHintsProvider
 import org.jetbrains.jewel.ui.platform.LocalPlatformCursorController
 import org.jetbrains.jewel.ui.theme.BaseJewelTheme
+import org.jetbrains.jewel.ui.theme.JewelStyles
 import org.jetbrains.jewel.ui.util.LocalMessageResourceResolverProvider
 
 /**
@@ -299,6 +300,7 @@ public fun ComponentStyling.dark(
     defaultSlimButtonStyle: ButtonStyle = ButtonStyle.Slim.Default.dark(),
     outlinedSlimButtonStyle: ButtonStyle = ButtonStyle.Slim.Outlined.dark(),
     badgeStyle: BadgeStyles = BadgeStyles.dark(),
+    jewelStyles: JewelStyles = IntUiThemeStyles,
 ): ComponentStyling =
     DefaultComponentStyling(
         checkboxStyle = checkboxStyle,
@@ -340,6 +342,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = defaultSlimButtonStyle,
         outlinedSlimButtonStyle = outlinedSlimButtonStyle,
         badgeStyle = badgeStyle,
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Deprecated("Use the variant with badgeStyle.", level = DeprecationLevel.HIDDEN)
@@ -424,6 +427,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = defaultSlimButtonStyle,
         outlinedSlimButtonStyle = outlinedSlimButtonStyle,
         badgeStyle = BadgeStyles.dark(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -509,6 +513,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.dark(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.dark(),
         badgeStyle = BadgeStyles.dark(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -590,6 +595,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.dark(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.dark(),
         badgeStyle = BadgeStyles.dark(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -669,6 +675,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.dark(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.dark(),
         badgeStyle = BadgeStyles.dark(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -747,6 +754,7 @@ public fun ComponentStyling.dark(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.dark(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.dark(),
         badgeStyle = BadgeStyles.dark(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter")
@@ -831,6 +839,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = defaultSlimButtonStyle,
         outlinedSlimButtonStyle = outlinedSlimButtonStyle,
         badgeStyle = badgeStyle,
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Deprecated("Use the variant with badgeStyle.", level = DeprecationLevel.HIDDEN)
@@ -915,6 +924,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = defaultSlimButtonStyle,
         outlinedSlimButtonStyle = outlinedSlimButtonStyle,
         badgeStyle = BadgeStyles.light(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -1000,6 +1010,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.light(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.light(),
         badgeStyle = BadgeStyles.light(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -1081,6 +1092,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.light(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.light(),
         badgeStyle = BadgeStyles.light(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -1160,6 +1172,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.light(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.light(),
         badgeStyle = BadgeStyles.light(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Suppress("UnusedReceiverParameter", "DEPRECATION_ERROR")
@@ -1238,6 +1251,7 @@ public fun ComponentStyling.light(
         defaultSlimButtonStyle = ButtonStyle.Slim.Default.light(),
         outlinedSlimButtonStyle = ButtonStyle.Slim.Outlined.light(),
         badgeStyle = BadgeStyles.light(),
+        jewelStyles = IntUiThemeStyles,
     )
 
 @Composable
@@ -1282,6 +1296,26 @@ public fun IntUiTheme(
             LocalMessageResourceResolverProvider provides IntUiMessageResourceResolver,
             LocalPlatformCursorController provides standaloneCursorController,
             LocalMacPlatformServices provides MacPlatformServicesDefaultImpl,
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+public fun IntUiThemeStyle(content: @Composable () -> Unit) {
+    val managerScope = rememberCoroutineScope()
+    val theme = JewelTheme.darkThemeDefinition(disabledAppearanceValues = DisabledAppearanceValues.dark())
+    IconManager.activate(StandaloneIconManager(managerScope))
+    BaseJewelTheme(theme, ComponentStyling, false) {
+        CompositionLocalProvider(
+            //            LocalPainterHintsProvider provides remember(theme) { StandalonePainterHintsProvider(theme) },
+            //            LocalNewUiChecker provides StandaloneNewUiChecker,
+            //            LocalMenuItemShortcutProvider provides StandaloneShortcutProvider,
+            //            LocalMenuItemShortcutHintProvider provides StandaloneMenuItemShortcutHintProvider,
+            //            LocalTypography provides IntUiTypography,
+            //            LocalMessageResourceResolverProvider provides IntUiMessageResourceResolver,
+            //            LocalPlatformCursorController provides StandalonePlatformCursorController,
         ) {
             content()
         }
